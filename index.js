@@ -178,7 +178,12 @@ class MailGun {
 
         res.on('end', function() {
           //Everything should be an object coming from Mailgun
-          data = JSON.parse(data);
+          try {
+            data = JSON.parse(data);
+          } catch(e) {
+            console.log("DID NOT SEND EMAIL: ", e)
+            data = e;
+          }
           if (res.statusCode == 200) {
             resolve(data);
           } else {
